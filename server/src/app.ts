@@ -1,9 +1,21 @@
+import path from 'node:path';
 import express from 'express';
 import cors from 'cors';
+
+// Is the app up?
+app.get('/health', (_req, res) => {
+  res.json({ ok: true });
+});
+
 import { productsRouter } from './routes/products-router.js';
 import { authRouter } from './routes/auth-router.js';
 import { usersRouter } from './routes/users-router.js';
 import { ordersRouter } from './routes/orders-router.js';
+
+// The built client: index.html and its JavaScript and CSS.
+const clientDist = path.join(import.meta.dirname, '..', '..', 'client', 'dist');
+app.use(express.static(clientDist));
+
 import { errorHandler } from './middleware/error-handler.js';
 import { getClientOrigin } from './config.js';
 
